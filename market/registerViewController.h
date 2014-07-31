@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  registerViewController.h
 //  market
 //
 //  Created by Eric Yang on 2014/7/19.
@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 #import "JsonObject.h"
 #import "marketHttpRequest.h"
-@interface FirstViewController : UIViewController
-@end
 
+@interface registerViewController : UIViewController
+@property (nonatomic,strong) HttpRequest *httpRequest;
+@property (nonatomic,strong) JsonObject *jsonObj;
+@end
