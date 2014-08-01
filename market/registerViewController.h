@@ -11,6 +11,5 @@
 #import "marketHttpRequest.h"
 
 @interface registerViewController : UIViewController
-@property (nonatomic,strong) HttpRequest *httpRequest;
 @property (nonatomic,strong) JsonObject *jsonObj;
 @end

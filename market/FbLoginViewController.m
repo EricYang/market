@@ -28,16 +28,6 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view.
-    NSURL *url=[NSURL URLWithString:@"http://54.178.199.96:8000/auth/facebook"];
-    NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:url];
-    //NSString *submitContent =@"{\"username\":\"ericyang\",\"password\":\"book37\"}";
-    [request setHTTPMethod:@"GET"];
-    NSOperationQueue *queue=[NSOperationQueue new];
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *reponse,NSData *data,NSError *error){
-        NSString *json =[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@/%@",json,error);
-        [self.webView loadHTMLString:json baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
-    }];
 }
 
 - (void)didReceiveMemoryWarning

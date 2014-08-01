@@ -10,24 +10,24 @@
 
 
 @interface marketHttpRequest : HttpRequest
-@property (nonatomic,strong) NSMutableDictionary *info;
+@property (retain) NSMutableDictionary*info;
+@property (strong,nonatomic) struct user *user;
 typedef void (^ASCompletionBlockCallFunc)();
--(marketHttpRequest*)init;
++(marketHttpRequest*)getInstance;
 -(void)setLoginParams:(NSMutableDictionary*)params;
 -(void)setup:(NSString*)domain;
+-(void)register:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)login:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
--(void)gProfile:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
-+(marketHttpRequest*)getInstance;
-/*
--(void)register;
--(void)putProfile*;
--(void)getDemand;
--(void)addDemand;
--(void)updateDemand;
--(void)deleteDemand;
--(void)getSupply;
--(void)addSupply;
--(void)updateSupply;
--(void)deleteSupply;
-*/
+-(void)readProfile:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)readDemands:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)readSupplies:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)updateProfile:(NSDictionary*)params  withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)updateDemands:(NSDictionary*)params  updateID:(NSString*)uid  withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)updateSupplies:(NSDictionary*)params  updateID:(NSString*)uid  withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)deteleDemands:(NSDictionary*)params deteleID:(NSString*)uid withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)deteleSupplies:(NSDictionary*)params deteleID:(NSString*)uid withCallback:(ASCompletionBlockCallFunc)callback;
+
+-(void)addDemands:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)addSupplies:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+
 @end

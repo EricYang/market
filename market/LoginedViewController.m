@@ -1,24 +1,21 @@
 //
-//  registerViewController.m
+//  LoginedViewController.m
 //  market
 //
-//  Created by Eric Yang on 2014/7/19.
+//  Created by Eric Yang on 2014/7/31.
 //  Copyright (c) 2014年 Eric Yang. All rights reserved.
 //
 
-#import "registerViewController.h"
+#import "LoginedViewController.h"
 
-@interface registerViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *username;
-@property (weak, nonatomic) IBOutlet UITextField *email;
-@property (weak, nonatomic) IBOutlet UITextField *password;
-@property (weak, nonatomic) IBOutlet UITextField *passwordConfirmation;
-@property (strong,nonatomic) marketHttpRequest *marketReq;
+@interface LoginedViewController ()
+
 @end
 
-@implementation registerViewController
-
-
+@implementation LoginedViewController
+- (IBAction)chaeckBtnPressed:(id)sender {
+    //NSLog(@"!!!!the token:%@",[self.marketReq info][@"token"]);
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,24 +25,18 @@
     }
     return self;
 }
-- (IBAction)submitBtnPress:(id)sender {
-    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-    params[@"username"]=self.username.text;
-    params[@"email"]=self.password.text;
-    params[@"passwordConfirmation"]=self.passwordConfirmation.text;
-    params[@"password"]=self.password.text;
-    [self.marketReq register:params withCallback:^(){
-        
-    }];
-    
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.jsonObj=[[JsonObject alloc] init];
     self.marketReq=[marketHttpRequest getInstance];
+    [self.marketReq  addObserver:self forKeyPath:@"info.token" options:NSKeyValueObservingOptionNew context:nil];
     // Do any additional setup after loading the view.
+}
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+     NSLog(@"!!!!outside token:%@",[change objectForKey:NSKeyValueChangeNewKey]);
 }
 
 - (void)didReceiveMemoryWarning

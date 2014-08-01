@@ -27,8 +27,8 @@
     params[@"username"]=self.username.text;
     params[@"password"]=self.password.text;
     [self.marketReq login:params withCallback:^(){
-        [self.marketReq gProfile:nil withCallback:^(){
-            NSLog(@"outside token:%@",[self.marketReq info][@"login"][@"response"][@"data"][@"token"]);
+        [self.marketReq readProfile:nil withCallback:^(){
+           // NSLog(@"outside token:%@",[self.marketReq info][@"login"][@"response"][@"data"][@"token"]);
         }];
     }];
     
