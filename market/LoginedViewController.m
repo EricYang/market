@@ -13,8 +13,11 @@
 @end
 
 @implementation LoginedViewController
+static void *user=&user;
+static void *token=&token;
 - (IBAction)chaeckBtnPressed:(id)sender {
-    //NSLog(@"!!!!the token:%@",[self.marketReq info][@"token"]);
+    NSLog(@"the token:%@",[self.marketReq info][@"token"]);
+    NSLog(@"the email:%@",[self.user email]);
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,13 +33,22 @@
 {
     [super viewDidLoad];
     self.marketReq=[marketHttpRequest getInstance];
-    [self.marketReq  addObserver:self forKeyPath:@"info.token" options:NSKeyValueObservingOptionNew context:nil];
+    self.user=[MarketUser getInstance];
+    [self.marketReq  addObserver:self forKeyPath:@"info.token" options:NSKeyValueObservingOptionNew context:token];
+    [self.marketReq addObserver:self forKeyPath:@"info.profile.get.response.data" options:NSKeyValueObservingOptionNew context:user];
+    
     // Do any additional setup after loading the view.
 }
+
 -(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    if (context==user) {
+        NSLog(@"user:%@",[change objectForKey:NSKeyValueChangeNewKey]);
+    }
+    if (context==token) {
+         NSLog(@"!!!!outside token:%@",[change objectForKey:NSKeyValueChangeNewKey]);
+    }
     
-     NSLog(@"!!!!outside token:%@",[change objectForKey:NSKeyValueChangeNewKey]);
 }
 
 - (void)didReceiveMemoryWarning

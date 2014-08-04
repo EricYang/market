@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JsonObject.h"
 #import "marketHttpRequest.h"
+#import "LoginedViewController.h"
 @interface FirstViewController : UIViewController
 @end
 

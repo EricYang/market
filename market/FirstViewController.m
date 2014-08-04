@@ -9,6 +9,11 @@
 #import "FirstViewController.h"
 
 @interface FirstViewController ()
+{
+    LoginedViewController *newViewController;
+}
+@property (nonatomic, retain) LoginedViewController *nViewController;
+
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (strong,nonatomic) JsonObject *jsonObj;
@@ -27,11 +32,28 @@
     params[@"username"]=self.username.text;
     params[@"password"]=self.password.text;
     [self.marketReq login:params withCallback:^(){
-        [self.marketReq readProfile:nil withCallback:^(){
-           // NSLog(@"outside token:%@",[self.marketReq info][@"login"][@"response"][@"data"][@"token"]);
-        }];
+        LoginedViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginedViewController"];
+        [self.navigationController pushViewController:viewController animated:YES];
+        /*
+        [self performSegueWithIdentifier:@"loginedStoryboard" sender:self];
+        
+        if (newViewController == nil)
+        {
+            LoginedViewController *newViewController =
+            [[LoginedViewController alloc]
+             initWithNibName:@"LoginedViewController"
+             bundle:[NSBundle mainBundle]];
+            
+            self.nViewController = newViewController;
+        }
+        
+        // How you reference your navigation controller will
+        // probably be a little different
+        [self.navigationController
+         pushViewController:self.nViewController
+         animated:YES];*/
     }];
-    
+
     }
 - (IBAction)registerhandler:(id)sender {
     

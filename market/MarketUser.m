@@ -9,5 +9,21 @@
 #import "MarketUser.h"
 
 @implementation MarketUser
+@synthesize email=_email;
+
+static MarketUser *instance = nil;
++(MarketUser *)getInstance
+{
+    @synchronized(self)
+    {
+        if(instance==nil)
+        {
+            instance= [MarketUser new];
+            
+        }
+    }
+    return instance;
+}
+
 
 @end

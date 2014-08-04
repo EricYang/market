@@ -19,6 +19,7 @@ static marketHttpRequest *instance = nil;
         {
             instance= [marketHttpRequest new];
             instance.info=[[NSMutableDictionary alloc] init];
+            instance.user=[[MarketUser alloc]init];
         }
     }
     return instance;
@@ -107,8 +108,14 @@ static marketHttpRequest *instance = nil;
              // Use your response NSDictionary object
              //NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"login"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+             if([self.info[@"login"][@"response"][@"data"] count]==0 ){
+             //if ([[self.info[@"login"][@"response"] allKeys] containsObject:@"errorObj"]) {
+                 return NSLog(@"error:%@",error);
+             }else{
+                 NSLog(@"success data:%@",self.info[@"login"][@"response"][@"data"]);
+             }
               self.info[@"token"]=self.info[@"login"][@"response"][@"data"][@"token"];
-             NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
+            // NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
              
              callback();
          }
@@ -132,7 +139,7 @@ static marketHttpRequest *instance = nil;
              //NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"register"][@"response"]=[self.jsonObj nsdataToDictionary:response];
              self.info[@"token"]=self.info[@"register"][@"response"][@"data"][@"token"];
-             NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
+             //NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
              callback();
          }
          else
@@ -179,6 +186,8 @@ static marketHttpRequest *instance = nil;
              // Use your response NSDictionary object
              NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"profile"][@"get"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+             //NSLog(@"success email:%@",self.info[@"profile"][@"get"][@"response"][@"data"][@"email"]);
+             //self.user.email =self.info[@"profile"][@"get"][@"response"][@"data"][@"email"];
              callback();
          }
          else
@@ -202,6 +211,7 @@ static marketHttpRequest *instance = nil;
              // Use your response NSDictionary object
              NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"supplies"][@"get"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+             
              callback();
          }
          else

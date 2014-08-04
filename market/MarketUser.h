@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface MarketUser : NSObject
-@property (nonatomic,strong) NSString *username;
-@property (nonatomic,strong) NSString *email;
++(MarketUser*)getInstance;
+@property (nonatomic,strong) NSMutableString *username;
+@property (retain) NSMutableString *email;
+-(void)setEmail:(NSMutableString *)email;
 @end

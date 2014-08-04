@@ -7,11 +7,11 @@
 //
 
 #import "HttpRequest.h"
-
+#import "MarketUser.h"
 
 @interface marketHttpRequest : HttpRequest
 @property (retain) NSMutableDictionary*info;
-@property (strong,nonatomic) struct user *user;
+@property (retain) MarketUser *user;
 typedef void (^ASCompletionBlockCallFunc)();
 +(marketHttpRequest*)getInstance;
 -(void)setLoginParams:(NSMutableDictionary*)params;
