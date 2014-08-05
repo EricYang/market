@@ -11,5 +11,6 @@
 #import "marketHttpRequest.h"
 #import "LoginedViewController.h"
 @interface FirstViewController : UIViewController
+-(void)nextpage;
 @end
 

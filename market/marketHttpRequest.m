@@ -110,19 +110,24 @@ static marketHttpRequest *instance = nil;
              self.info[@"login"][@"response"]=[self.jsonObj nsdataToDictionary:response];
              if([self.info[@"login"][@"response"][@"data"] count]==0 ){
              //if ([[self.info[@"login"][@"response"] allKeys] containsObject:@"errorObj"]) {
-                 return NSLog(@"error:%@",error);
+                  NSLog(@"error data:%@",self.info[@"login"][@"response"]);
+                 //return NSLog(@"error:%@",error);
+                 callback(0);
              }else{
-                 NSLog(@"success data:%@",self.info[@"login"][@"response"][@"data"]);
+                self.info[@"token"]=self.info[@"login"][@"response"][@"data"][@"token"];
+                 NSLog(@"success data:%@",self.info[@"login"][@"response"]);
+                 callback(1);
              }
-              self.info[@"token"]=self.info[@"login"][@"response"][@"data"][@"token"];
+              //self.info[@"token"]=self.info[@"login"][@"response"][@"data"][@"token"];
             // NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
              
-             callback();
+             
          }
          else
          {
              // Display you error NSError object
              NSLog(@"error:%@",error);
+             callback(0);
          }
      }];
 

@@ -12,7 +12,7 @@
 {
     LoginedViewController *newViewController;
 }
-@property (nonatomic, retain) LoginedViewController *nViewController;
+@property (nonatomic, retain) LoginedViewController *viewController;
 
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -31,30 +31,27 @@
         NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"username"]=self.username.text;
     params[@"password"]=self.password.text;
-    [self.marketReq login:params withCallback:^(){
-        LoginedViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginedViewController"];
-        [self.navigationController pushViewController:viewController animated:YES];
-        /*
-        [self performSegueWithIdentifier:@"loginedStoryboard" sender:self];
-        
-        if (newViewController == nil)
-        {
-            LoginedViewController *newViewController =
-            [[LoginedViewController alloc]
-             initWithNibName:@"LoginedViewController"
-             bundle:[NSBundle mainBundle]];
+    [self.marketReq login:params withCallback:^(int isSuccess){
+        if(isSuccess){
             
-            self.nViewController = newViewController;
+        NSLog(@"go next page");
+            [self nextpage];
+        }else{
+            NSLog(@"wrong");
         }
-        
-        // How you reference your navigation controller will
-        // probably be a little different
-        [self.navigationController
-         pushViewController:self.nViewController
-         animated:YES];*/
     }];
 
     }
+-(void)nextpage
+{
+    dispatch_queue_attr_t queue=dispatch_get_main_queue();
+    dispatch_async(queue, ^{
+        LoginedViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"loginedStoryboard"] ;
+        [[self navigationController] pushViewController:viewController animated:YES];
+
+    });
+
+}
 - (IBAction)registerhandler:(id)sender {
     
 }
