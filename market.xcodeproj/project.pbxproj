@@ -10,6 +10,7 @@
 		07B3FEFF198A1FBF000B2F48 /* LoginedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B3FEFE198A1FBE000B2F48 /* LoginedViewController.m */; };
 		07B3FF05198B955D000B2F48 /* MarketUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B3FF04198B955D000B2F48 /* MarketUser.m */; };
 		07B3FF08198B95E0000B2F48 /* ModelUser.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 07B3FF06198B95E0000B2F48 /* ModelUser.xcdatamodeld */; };
+		07B3FF0A1990DABB000B2F48 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B3FF091990DABB000B2F48 /* MapKit.framework */; };
 		F50D88CB197B55F20005662C /* FbLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F50D88CA197B55F20005662C /* FbLoginViewController.m */; };
 		F50D88CF197B61F20005662C /* fb.plist in Resources */ = {isa = PBXBuildFile; fileRef = F50D88CE197B61F20005662C /* fb.plist */; };
 		F53E8961197A925D00C409FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F53E8960197A925D00C409FC /* main.m */; };
@@ -41,6 +42,7 @@
 		07B3FF03198B955D000B2F48 /* MarketUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarketUser.h; sourceTree = "<group>"; };
 		07B3FF04198B955D000B2F48 /* MarketUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarketUser.m; sourceTree = "<group>"; };
 		07B3FF07198B95E0000B2F48 /* ModelUser.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelUser.xcdatamodel; sourceTree = "<group>"; };
+		07B3FF091990DABB000B2F48 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F50D88C9197B55F20005662C /* FbLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FbLoginViewController.h; sourceTree = "<group>"; };
 		F50D88CA197B55F20005662C /* FbLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FbLoginViewController.m; sourceTree = "<group>"; };
 		F50D88CE197B61F20005662C /* fb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fb.plist; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07B3FF0A1990DABB000B2F48 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +92,7 @@
 		F53E8952197A925D00C409FC = {
 			isa = PBXGroup;
 			children = (
+				07B3FF091990DABB000B2F48 /* MapKit.framework */,
 				F53E895D197A925D00C409FC /* market */,
 				F53E8977197A925D00C409FC /* marketTests */,
 				F53E895C197A925D00C409FC /* Products */,

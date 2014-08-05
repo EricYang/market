@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "marketHttpRequest.h"
 #import "MarketUser.h"
-@interface LoginedViewController : UIViewController
+#import <CoreLocation/CoreLocation.h>
+@interface LoginedViewController : UIViewController <CLLocationManagerDelegate>
+{
+    CLLocationManager *location;
+}
 @property (nonatomic,strong) marketHttpRequest *marketReq;
 @property (nonatomic,strong) MarketUser *user;
 @end

@@ -28,10 +28,19 @@ static void *token=&token;
     }
     return self;
 }
-
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *c= [locations objectsAtIndexes:0];
+    
+    NSLog(@"緯度：%f,經度：%f,高度：%f",c.coordinate.latitude,c.coordinate.longitude,c.altitude);
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    location=[[CLLocationManager alloc]init];
+    location.delegate=self;
+    [location startUpdatingLocation];
+    
     self.marketReq=[marketHttpRequest getInstance];
     self.user=[MarketUser getInstance];
     [self.marketReq  addObserver:self forKeyPath:@"info.token" options:NSKeyValueObservingOptionNew context:token];
@@ -57,7 +66,7 @@ static void *token=&token;
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -66,6 +75,6 @@ static void *token=&token;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end
