@@ -32,6 +32,7 @@
     [request setHTTPMethod:method];
     if (body) {
         [request setHTTPBody:body];
+        NSLog(@"body:%@",body);
     }
     NSLog(@"url:%@",uri);
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];

@@ -30,9 +30,14 @@ static marketHttpRequest *instance = nil;
 -(void)setup:(NSString *)domain
 {
     self.info[@"domain"]=domain;
+    
     self.info[@"login"] = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                              @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/login"],@"method":@"POST"
-                                                                             }],
+                                                                             }];
+    
+    self.info[@"fb"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                                                                @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/auth/facebook/token"],@"method":@"GET"
+                                                                                }];
         self.info[@"register"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
                                  @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/register"],@"method":@"POST"
                                  }];
@@ -45,7 +50,7 @@ static marketHttpRequest *instance = nil;
                                         @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/profile"],@"method":@"POST"
                                         
                                         }]
-                                }],
+                                }];
         self.info[@"demands"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                   @"get":@{
                                           @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"GET"
@@ -63,7 +68,7 @@ static marketHttpRequest *instance = nil;
                                           @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"DELETE"
                                           
                                           }]
-                                  }],
+                                  }];
         self.info[@"supplies"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                   @"get":[[NSMutableDictionary alloc] initWithDictionary:@{
                                           @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/supplies"],@"method":@"GET"
@@ -140,21 +145,50 @@ static marketHttpRequest *instance = nil;
      {
          if (success)
          {
-             // Use your response NSDictionary object
-             //NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"register"][@"response"]=[self.jsonObj nsdataToDictionary:response];
-             self.info[@"token"]=self.info[@"register"][@"response"][@"data"][@"token"];
-             //NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
-             callback();
+             if([self.info[@"register"][@"response"][@"data"] count]==0 ){
+                 //if ([[self.info[@"login"][@"response"] allKeys] containsObject:@"errorObj"]) {
+                 NSLog(@"error data:%@",self.info[@"register"][@"response"]);
+                 //return NSLog(@"error:%@",error);
+                 callback(0);
+             }else{
+                 self.info[@"token"]=self.info[@"register"][@"response"][@"data"][@"token"];
+                 NSLog(@"success data:%@",self.info[@"register"][@"response"]);
+                 callback(1);
+             }
          }
          else
          {
+             // Display you error NSError object
+             NSLog(@"error:%@",error);
+             callback(0);
+         }
+     }];
+    
+}
+-(void)fblogin:(NSString *)accesstoken withCallback:(ASCompletionBlockCallFunc)callback
+{
+    NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"access_token":accesstoken}];
+    [self connect:self.info[@"fb"][@"uri"] andMethod:self.info[@"fb"][@"method"] andBody:nil andParams:_params withCallback:^(BOOL success, NSData *response, NSError *error)
+     {
+         if (success)
+         {
+             // Use your response NSDictionary object
+             NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
+             self.info[@"fb"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+             self.info[@"token"]=self.info[@"fb"][@"response"][@"data"][@"token"];
+             callback(1);
+         }
+         else
+         {
+             callback(0);
              // Display you error NSError object
              NSLog(@"error:%@",error);
          }
      }];
     
 }
+
 -(void)readDemands:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback
 {
     NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"token":self.info[@"token"]}];

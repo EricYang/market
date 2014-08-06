@@ -10,7 +10,12 @@
 #import "JsonObject.h"
 #import "marketHttpRequest.h"
 #import "LoginedViewController.h"
+#import <FacebookSDK/FacebookSDK.h>
 @interface FirstViewController : UIViewController
+@property (weak, nonatomic) IBOutlet FBLoginView *fbloginView;
 -(void)nextpage;
+- (IBAction)registerBtnPressed:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIView *registerView;
+
 @end
 

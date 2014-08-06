@@ -16,6 +16,7 @@ typedef void (^ASCompletionBlockCallFunc)();
 +(marketHttpRequest*)getInstance;
 -(void)setLoginParams:(NSMutableDictionary*)params;
 -(void)setup:(NSString*)domain;
+-(void)fblogin:(NSString*)accesstoken withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)register:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)login:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)readProfile:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;

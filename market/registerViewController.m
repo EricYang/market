@@ -29,14 +29,7 @@
     return self;
 }
 - (IBAction)submitBtnPress:(id)sender {
-    NSMutableDictionary *params=[NSMutableDictionary dictionary];
-    params[@"username"]=self.username.text;
-    params[@"email"]=self.password.text;
-    params[@"passwordConfirmation"]=self.passwordConfirmation.text;
-    params[@"password"]=self.password.text;
-    [self.marketReq register:params withCallback:^(){
-        
-    }];
+    
     
 }
 
