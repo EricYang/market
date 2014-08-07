@@ -193,7 +193,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="144" y="132" width="46" height="30"/>
+                                    <rect key="frame" x="48" y="376" width="46" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="chaeckBtnPressed:" destination="God-Qw-R77" eventType="touchUpInside" id="X8Q-Oi-jTa"/>

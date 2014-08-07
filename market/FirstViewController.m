@@ -86,10 +86,21 @@
 {
     fbAccessToken = [FBSession activeSession].accessTokenData.accessToken;
     NSLog(@"user:%@,token:%@",user,fbAccessToken);
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"uuid"]=self.marketReq.info[@"uuid"];
+    params[@"version"]=[[UIDevice currentDevice] systemVersion];
     [self.marketReq fblogin:fbAccessToken withCallback:^(int isSuccess){
         if(isSuccess){
             NSLog(@"fb login");
-            //[self nextpage];
+            self.marketReq.info[@"user"][@"ios"]=params;
+            [self.marketReq updateProfile:nil withBody:nil withCallback:^(int isSuccess2){
+                if(isSuccess2){
+                    NSLog(@"go next page");
+                    [self nextpage];
+                }else{
+                    NSLog(@"wrong");
+                }
+            }];
         }else{
             NSLog(@"wrong");
         }

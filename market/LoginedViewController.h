@@ -10,7 +10,8 @@
 #import "marketHttpRequest.h"
 #import "MarketUser.h"
 #import <CoreLocation/CoreLocation.h>
-@interface LoginedViewController : UIViewController <CLLocationManagerDelegate>
+#import <MapKit/MapKit.h>
+@interface LoginedViewController : UIViewController <MKMapViewDelegate>
 {
     CLLocationManager *location;
 }

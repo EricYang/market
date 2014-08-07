@@ -30,10 +30,12 @@ static marketHttpRequest *instance = nil;
 -(void)setup:(NSString *)domain
 {
     self.info[@"domain"]=domain;
+    self.info[@"user"] = [[NSMutableDictionary alloc] initWithDictionary:@{@"ios":[[NSMutableDictionary alloc] initWithDictionary:@{@"device":@"iphone"}]}];
     
     self.info[@"login"] = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                              @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/login"],@"method":@"POST"
                                                                              }];
+    
     
     self.info[@"fb"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
                                                                                 @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/auth/facebook/token"],@"method":@"GET"
@@ -47,7 +49,7 @@ static marketHttpRequest *instance = nil;
   
                                  }],
                                 @"update":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                        @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/profile"],@"method":@"POST"
+                                        @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/profile"],@"method":@"PUT"
                                         
                                         }]
                                 }];
@@ -123,8 +125,6 @@ static marketHttpRequest *instance = nil;
                  NSLog(@"success data:%@",self.info[@"login"][@"response"]);
                  callback(1);
              }
-              //self.info[@"token"]=self.info[@"login"][@"response"][@"data"][@"token"];
-            // NSLog(@"token:%@",[self.jsonObj dictionaryToNSString:self.info[@"token"]]);
              
              
          }
@@ -137,6 +137,7 @@ static marketHttpRequest *instance = nil;
      }];
 
 }
+
 -(void)register:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback
 {
     
@@ -166,9 +167,9 @@ static marketHttpRequest *instance = nil;
      }];
     
 }
--(void)fblogin:(NSString *)accesstoken withCallback:(ASCompletionBlockCallFunc)callback
+-(void)fblogin:(NSString *)access_token withCallback:(ASCompletionBlockCallFunc)callback
 {
-    NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"access_token":accesstoken}];
+    NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"access_token":access_token}];
     [self connect:self.info[@"fb"][@"uri"] andMethod:self.info[@"fb"][@"method"] andBody:nil andParams:_params withCallback:^(BOOL success, NSData *response, NSError *error)
      {
          if (success)
@@ -177,6 +178,7 @@ static marketHttpRequest *instance = nil;
              NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
              self.info[@"fb"][@"response"]=[self.jsonObj nsdataToDictionary:response];
              self.info[@"token"]=self.info[@"fb"][@"response"][@"data"][@"token"];
+             self.info[@"user"]=[[NSMutableDictionary alloc] initWithDictionary:self.info[@"fb"][@"response"][@"data"] ];
              callback(1);
          }
          else
@@ -261,25 +263,34 @@ static marketHttpRequest *instance = nil;
      }];
     
 }
--(void)updateProfile:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback
+-(void)updateProfile:(NSDictionary*)params withBody:(NSDictionary*)body withCallback:(ASCompletionBlockCallFunc)callback
 {
     NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"token":self.info[@"token"]}];
     if(params){
         [_params addEntriesFromDictionary:params];
     }
-    [self connect:self.info[@"profile"][@"update"][@"uri"] andMethod:self.info[@"profile"][@"update"][@"method"] andBody:nil andParams:_params withCallback:^(BOOL success, NSData *response, NSError *error)
+    [self connect:self.info[@"profile"][@"update"][@"uri"] andMethod:self.info[@"profile"][@"update"][@"method"] andBody:[self.jsonObj dictionaryToNSData:self.info[@"user"]] andParams:_params withCallback:^(BOOL success, NSData *response, NSError *error)
      {
          if (success)
          {
-             // Use your response NSDictionary object
-             NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
-             self.info[@"profile"][@"update"][@"response"]=[self.jsonObj nsdataToDictionary:response];
-             callback();
+            self.info[@"profile"][@"update"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+            NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
+             if(self.info[@"profile"][@"update"][@"response"][@"info"][@"status"] ==0 ){
+                 //if ([[self.info[@"login"][@"response"] allKeys] containsObject:@"errorObj"]) {
+                 NSLog(@"error data:%@",self.info[@"profile"][@"update"][@"response"]);
+                 //return NSLog(@"error:%@",error);
+                 callback(0);
+             }else{
+                 
+                 NSLog(@"success data:%@",self.info[@"profile"][@"update"][@"response"]);
+                 callback(1);
+             }
          }
          else
          {
              // Display you error NSError object
              NSLog(@"error:%@",error);
+             callback(0);
          }
      }];
     
