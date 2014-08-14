@@ -7,22 +7,48 @@
 //
 
 #import "LoginedViewController.h"
-#import <MapKit/MapKit.h>
 @interface LoginedViewController ()
 {
-    MKMapView *map;
+    NSArray *_pickerData;
+    NSString *genre;
 }
-
 @end
 
 @implementation LoginedViewController
 static void *user=&user;
 static void *token=&token;
 - (IBAction)chaeckBtnPressed:(id)sender {
-    NSLog(@"the token:%@",[self.marketReq info][@"token"]);
-    NSLog(@"the email:%@",[self.user email]);
-}
+    
+    //NSLog(@"the token:%@",[self.marketReq info][@"token"]);
+    //NSLog(@"the email:%@",[self.user email]);
+    //NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+    //[f setNumberStyle:NSNumberFormatterDecimalStyle];
+    //NSNumber * status = [f numberFromString:self.statusField.text];
 
+    NSMutableDictionary *params=[NSMutableDictionary dictionary];
+    params[@"product"]=self.productField.text;
+    params[@"status"]= self.statusField.text;
+    params[@"genre"]=genre;
+    [self.marketReq marketPrice:params withCallback:^(int isSuccess){
+        if(isSuccess){
+            NSLog(@"got value");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.valueLabel.text=[NSString stringWithFormat:@"New one price: NT$ %@ \n And your goods: NT$%@",self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"avgsValue"],self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"yoursValue"]];
+            });
+            NSLog(@"%@",self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"yoursValue"]);
+        
+        }else{
+            NSLog(@"wrong");
+        }
+    }];
+
+}
+- (IBAction) backgroundTap: (id)sender
+{
+    [self.productField resignFirstResponder];
+    [self.statusField resignFirstResponder];
+    //[sender resignFirstResponder];   // number label
+}
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -31,65 +57,24 @@ static void *token=&token;
     }
     return self;
 }
-/*
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *c= [locations objectsAtIndexes:0];
-    
-    NSLog(@"緯度：%f,經度：%f,高度：%f",c.coordinate.latitude,c.coordinate.longitude,c.altitude);
-}
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-    NSLog(@"OldLocation %f %f", oldLocation.coordinate.latitude, oldLocation.coordinate.longitude);
-    NSLog(@"NewLocation %f %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-}*/
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    /*
-    location=[[CLLocationManager alloc]init];
-    location.delegate=self;
-    //[location startUpdatingLocation];
-    #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    
-    //In ViewDidLoad
-    if(IS_OS_8_OR_LATER) {
-        [location requestAlwaysAuthorization];
-    }
-    
-    [location startUpdatingLocation];
-    */
     self.marketReq=[marketHttpRequest getInstance];
     self.user=[MarketUser getInstance];
     [self.marketReq  addObserver:self forKeyPath:@"info.token" options:NSKeyValueObservingOptionNew context:token];
     [self.marketReq addObserver:self forKeyPath:@"info.profile.get.response.data" options:NSKeyValueObservingOptionNew context:user];
-    [self map_init];
     
+    // Initialize Data
+    _pickerData = @[@"phone", @"car"];
+    
+    // Connect data
+    self.genrePicker.dataSource = self;
+    self.genrePicker.delegate = self;
     // Do any additional setup after loading the view.
 }
-- (void)map_init {
-    
-    //建立MapView
-    map = [[MKMapView alloc] initWithFrame:CGRectMake(0.0f, 40.0f, 320.0f, 400.0f)];
-    
-    //顯示目前位置（藍色圓點）
-    map.showsUserLocation = YES;
-    
-    //MapView的環境設置
-    map.mapType = MKMapTypeStandard;
-    map.scrollEnabled = YES;
-    map.zoomEnabled = YES;
-    
-    //將MapView顯示於畫面
-    [self.view insertSubview:map atIndex:0];
-    
-    //取得目前MAP的中心點座標並show在對應的TextField中
-    double X = map.centerCoordinate.latitude;
-    double Y = map.centerCoordinate.longitude;
-    
-    //latitudeField.text = [NSString stringWithFormat:@"%6f", X];
-    //longitudeField.text = [NSString stringWithFormat:@"%6f", Y];
-    NSLog(@"緯度：%f,經度：%f",X,Y);
-}
+
 
 
 -(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -119,42 +104,25 @@ static void *token=&token;
     // Pass the selected object to the new view controller.
 }
 
-//自行定義的設定地圖函式
-- (void)setMapRegionLongitude:(double)Y andLatitude:(double)X withLongitudeSpan:(double)SY andLatitudeSpan:(double)SX {
-    
-    //設定經緯度
-    CLLocationCoordinate2D mapCenter;
-    mapCenter.latitude = X;
-    mapCenter.longitude = Y;
-    
-    //Map Zoom設定
-    MKCoordinateSpan mapSpan;
-    mapSpan.latitudeDelta = SX;
-    mapSpan.longitudeDelta = SY;
-    
-    //設定地圖顯示位置
-    MKCoordinateRegion mapRegion;
-    mapRegion.center = mapCenter;
-    mapRegion.span = mapSpan;
-    
-    //前往顯示位置
-    [map setRegion:mapRegion];
-    [map regionThatFits:mapRegion];
+#pragma mark - picker
+
+// The number of columns of data
+- (int)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
 }
 
-- (IBAction)onNowLocacion:(id)sender {
-    
-    //取得現在位置
-    double X = map.userLocation.location.coordinate.latitude;
-    double Y = map.userLocation.location.coordinate.longitude;
-    
-    //show在對應的TextField中
-   // latitudeField.text = [NSString stringWithFormat:@"%6f", X];
-   // longitudeField.text = [NSString stringWithFormat:@"%6f", Y];
-   
-    NSLog(@"緯度：%f,經度：%f",X,Y);
-
-    //自行定義的設定地圖函式
-    [self setMapRegionLongitude:Y andLatitude:X withLongitudeSpan:0.05 andLatitudeSpan:0.05];
+// The number of rows of data
+- (int)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return _pickerData.count;
 }
+
+// The data to return for the row and component (column) that's being passed in
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    genre=_pickerData[row];
+    return _pickerData[row];
+}
+
 @end

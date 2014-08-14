@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "marketHttpRequest.h"
 #import "MarketUser.h"
-#import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
-@interface LoginedViewController : UIViewController <MKMapViewDelegate>
-{
-    CLLocationManager *location;
-}
+@interface LoginedViewController : UIViewController<UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic,strong) marketHttpRequest *marketReq;
 @property (nonatomic,strong) MarketUser *user;
+@property (weak, nonatomic) IBOutlet UITextField *productField;
+@property (weak, nonatomic) IBOutlet UITextField *statusField;
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UIPickerView *genrePicker;
 @end

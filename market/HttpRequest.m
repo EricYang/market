@@ -7,7 +7,6 @@
 //
 
 #import "HttpRequest.h"
-
 @implementation HttpRequest
 -(HttpRequest*)init
 {
@@ -16,6 +15,7 @@
     }
     return self;
 }
+
 -(void)connect:(NSString*)uri andMethod:(NSString*)method andBody:(NSData*)body andParams:(NSDictionary*)data withCallback:(ASCompletionBlock)callback
 {
     if (data) {
@@ -27,7 +27,12 @@
             // do stuff
         }
     }
-    NSURL *url=[NSURL URLWithString:uri];
+    //NSString *uriInBase64 = [uri base64String];
+    //NSString *uriDecoded = [NSString stringFromBase64String:uriInBase64];
+    
+    NSString *encodeUrl = [uri stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"encode url: %@", encodeUrl);
+    NSURL *url=[NSURL URLWithString:encodeUrl];
     NSMutableURLRequest *request =[NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:method];
     if (body) {

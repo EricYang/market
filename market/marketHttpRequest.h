@@ -22,6 +22,7 @@ typedef void (^ASCompletionBlockCallFunc)();
 -(void)readProfile:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)readDemands:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)readSupplies:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
+-(void)marketPrice:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)updateProfile:(NSDictionary*)params withBody:(NSDictionary*)body withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)updateDemands:(NSDictionary*)params  updateID:(NSString*)uid  withCallback:(ASCompletionBlockCallFunc)callback;
 -(void)updateSupplies:(NSDictionary*)params  updateID:(NSString*)uid  withCallback:(ASCompletionBlockCallFunc)callback;

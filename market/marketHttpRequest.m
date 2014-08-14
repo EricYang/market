@@ -43,6 +43,9 @@ static marketHttpRequest *instance = nil;
         self.info[@"register"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
                                  @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/register"],@"method":@"POST"
                                  }];
+        self.info[@"marketPrice"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
+                                                                                @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/market_price/152983538"],@"method":@"GET"
+                                                                                }];
         self.info[@"profile"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                 @"get":[[NSMutableDictionary alloc] initWithDictionary:@{
                                  @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/profile"],@"method":@"GET"
@@ -166,6 +169,28 @@ static marketHttpRequest *instance = nil;
          }
      }];
     
+}
+-(void)marketPrice:(NSDictionary*)params withCallback:(ASCompletionBlockCallFunc)callback
+{
+    NSMutableDictionary *_params=[[NSMutableDictionary alloc]initWithDictionary:@{@"token":self.info[@"token"]}];
+    if(params){
+        [_params addEntriesFromDictionary:params];
+    }
+    [self connect:self.info[@"marketPrice"][@"uri"] andMethod:self.info[@"marketPrice"][@"method"] andBody:nil andParams:_params withCallback:^(BOOL success, NSData *response, NSError *error)
+     {
+         if (success)
+         {
+             // Use your response NSDictionary object
+             NSLog(@"success:%@",[self.jsonObj nsdataToDictionary:response]);
+             self.info[@"marketPrice"][@"response"]=[self.jsonObj nsdataToDictionary:response];
+             callback();
+         }
+         else
+         {
+             // Display you error NSError object
+             NSLog(@"error:%@",error);
+         }
+     }];
 }
 -(void)fblogin:(NSString *)access_token withCallback:(ASCompletionBlockCallFunc)callback
 {
