@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		07083CFA1991F1670032E3FF /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07083CF91991F1670032E3FF /* FacebookSDK.framework */; };
-		0741A6D6199B554300CAD585 /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0741A6D5199B554300CAD585 /* MF_Base64Additions.m */; };
 		0799F83119A33B2700537262 /* UserDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0799F83019A33B2700537262 /* UserDataViewController.m */; };
 		07B3FEFF198A1FBF000B2F48 /* LoginedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B3FEFE198A1FBE000B2F48 /* LoginedViewController.m */; };
 		07B3FF05198B955D000B2F48 /* MarketUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B3FF04198B955D000B2F48 /* MarketUser.m */; };
@@ -38,8 +37,6 @@
 
 /* Begin PBXFileReference section */
 		07083CF91991F1670032E3FF /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
-		0741A6D4199B554300CAD585 /* MF_Base64Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MF_Base64Additions.h; path = ../../Base64/Base64/MF_Base64Additions.h; sourceTree = "<group>"; };
-		0741A6D5199B554300CAD585 /* MF_Base64Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MF_Base64Additions.m; path = ../../Base64/Base64/MF_Base64Additions.m; sourceTree = "<group>"; };
 		0799F82F19A33B2700537262 /* UserDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDataViewController.h; sourceTree = "<group>"; };
 		0799F83019A33B2700537262 /* UserDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDataViewController.m; sourceTree = "<group>"; };
 		07B3FEFD198A1FBE000B2F48 /* LoginedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginedViewController.h; sourceTree = "<group>"; };
@@ -170,8 +167,6 @@
 		F5DCC73F1989379D0030CF76 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				0741A6D4199B554300CAD585 /* MF_Base64Additions.h */,
-				0741A6D5199B554300CAD585 /* MF_Base64Additions.m */,
 				F5DCC73919868BBE0030CF76 /* JsonObject.h */,
 				F5DCC73A19868BBE0030CF76 /* JsonObject.m */,
 				F5DCC73C198699CE0030CF76 /* HttpRequest.h */,
@@ -294,7 +289,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				07B3FF05198B955D000B2F48 /* MarketUser.m in Sources */,
-				0741A6D6199B554300CAD585 /* MF_Base64Additions.m in Sources */,
 				F5DCC73E198699CE0030CF76 /* HttpRequest.m in Sources */,
 				F53E8964197A925D00C409FC /* AppDelegate.m in Sources */,
 				F53E8967197A925D00C409FC /* FirstViewController.m in Sources */,

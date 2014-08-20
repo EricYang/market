@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "JsonObject.h"
-#import "MF_Base64Additions.h"
 @interface HttpRequest : NSObject
 @property(nonatomic,strong) JsonObject *jsonObj;
 typedef void (^ASCompletionBlock)(BOOL success, NSData *response, NSError *error);

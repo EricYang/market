@@ -10,7 +10,7 @@
 
 @interface UserDataViewController ()
 
-@property (strong)NSArray *roleArray;
+@property (strong)NSMutableArray *roleArray;
 @end
 
 @implementation UserDataViewController
@@ -28,14 +28,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.roleArray = [[NSArray alloc] initWithObjects:@{@"title":@"test"},nil];
+    self.roleArray = [[NSMutableArray alloc] initWithObjects:@{@"title":@"test"},nil];
     [self setTitle:@"LEGO Heroica"];
     self.marketReq=[marketHttpRequest getInstance];
     [self.marketReq readSupplies:nil withCallback:^(int isSuccess2){
         if(isSuccess2){
             NSLog(@"read go next page");
             self.roleArray=self.marketReq.info[@"supplies"][@"get"][@"response"][@"data"];
+            dispatch_queue_attr_t queue=dispatch_get_main_queue();
+            dispatch_async(queue, ^{
             [self.tableView reloadData];
+            });
         }else{
             NSLog(@"wrong");
         }
@@ -50,8 +53,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.roleArray count];
 }
+- (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *header;
+    switch (section) {
+        case 0:
+            header=@"我的物品";
+            break;
+            
+        default:
+            break;
+    }
+    return header;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSLog(@"draw");
     //製作可重複利用的表格欄位Cell
     static NSString *CellIdentifier = @"CellIdentifier";
     

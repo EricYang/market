@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LoginedViewController.h"
 #import "marketHttpRequest.h"
-@interface UserDataViewController : UITableViewController
+@interface UserDataViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 @property (strong,nonatomic) UINavigationController *navigationController;
 @property (strong,nonatomic) marketHttpRequest *marketReq;
 - (IBAction)addbtnPressed:(id)sender;
