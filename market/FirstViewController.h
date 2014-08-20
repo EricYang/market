@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JsonObject.h"
 #import "marketHttpRequest.h"
-#import "LoginedViewController.h"
+#import "UserDataViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
 @interface FirstViewController : UIViewController
 @property (weak, nonatomic) IBOutlet FBLoginView *fbloginView;

@@ -44,7 +44,7 @@ static marketHttpRequest *instance = nil;
                                  @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/register"],@"method":@"POST"
                                  }];
         self.info[@"marketPrice"]  = [[NSMutableDictionary alloc] initWithDictionary:@{
-                                                                                @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/market_price/152983538"],@"method":@"GET"
+                                                                                @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/market_price"],@"method":@"GET"
                                                                                 }];
         self.info[@"profile"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                 @"get":[[NSMutableDictionary alloc] initWithDictionary:@{
@@ -58,37 +58,37 @@ static marketHttpRequest *instance = nil;
                                 }];
         self.info[@"demands"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                   @"get":@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"GET"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/demands"],@"method":@"GET"
                                           
                                           },
                                   @"add":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"POST"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/demands"],@"method":@"POST"
                                           
                                           } ],
                                   @"update":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"PUT"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/demands"],@"method":@"PUT"
                                           
                                           } ],
                                   @"delete":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/demands"],@"method":@"DELETE"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/demands"],@"method":@"DELETE"
                                           
                                           }]
                                   }];
         self.info[@"supplies"]  =[[NSMutableDictionary alloc] initWithDictionary:@{
                                   @"get":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/supplies"],@"method":@"GET"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/supplies"],@"method":@"GET"
                                           
                                           }],
                                   @"add":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/supplies"],@"method":@"POST"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/supplies"],@"method":@"POST"
                                           
                                           }],
                                   @"update":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/supplies"],@"method":@"PUT"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/supplies"],@"method":@"PUT"
                                           
                                           }],
                                   @"delete":[[NSMutableDictionary alloc] initWithDictionary:@{
-                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/ajax/supplies"],@"method":@"DELETE"
+                                          @"uri": [NSString stringWithFormat:@"%@%@",self.info[@"domain"],@"/supplies"],@"method":@"DELETE"
                                           
                                           }]
                                   }];

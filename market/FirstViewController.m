@@ -10,9 +10,9 @@
 #import <FacebookSDK/FacebookSDK.h>
 @interface FirstViewController () <FBLoginViewDelegate>
 {
-    LoginedViewController *newViewController;
+    int loginCount;
 }
-@property (nonatomic, retain) LoginedViewController *viewController;
+
 
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -39,7 +39,7 @@
     params[@"password"]=self.password.text;
     [self.marketReq login:params withCallback:^(int isSuccess){
         if(isSuccess){
-        NSLog(@"go next page");
+        NSLog(@"login go next page");
             [self nextpage];
         }else{
             NSLog(@"wrong");
@@ -51,9 +51,8 @@
 {
     dispatch_queue_attr_t queue=dispatch_get_main_queue();
     dispatch_async(queue, ^{
-        LoginedViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"loginedStoryboard"] ;
-        [[self navigationController] pushViewController:viewController animated:YES];
-
+        UserDataViewController *viewController1 = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"UserDataStoryboard"] ;//@"loginedStoryboard"];//@"UserDataStoryboard"] ;
+        [[self navigationController] pushViewController:viewController1 animated:YES];
     });
 
 }
@@ -66,7 +65,7 @@
     params[@"password"]=self.reg_password.text;
     [self.marketReq register:params withCallback:^(int isSuccess){
         if(isSuccess){
-            NSLog(@"go next page");
+            NSLog(@"register go next page");
             [self nextpage];
         }else{
             NSLog(@"wrong");
@@ -89,13 +88,15 @@
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"uuid"]=self.marketReq.info[@"uuid"];
     params[@"version"]=[[UIDevice currentDevice] systemVersion];
+    if(loginCount<=0){
+        loginCount+=1;
     [self.marketReq fblogin:fbAccessToken withCallback:^(int isSuccess){
         if(isSuccess){
             NSLog(@"fb login");
             self.marketReq.info[@"user"][@"ios"]=params;
             [self.marketReq updateProfile:nil withBody:nil withCallback:^(int isSuccess2){
                 if(isSuccess2){
-                    NSLog(@"go next page");
+                    NSLog(@"fblogin go next page");
                     [self nextpage];
                 }else{
                     NSLog(@"wrong");
@@ -105,6 +106,7 @@
             NSLog(@"wrong");
         }
     }];
+    }
 }
 -(void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
 {
@@ -116,6 +118,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    loginCount=0;
     self.jsonObj=[[JsonObject alloc] init];
     self.marketReq=[marketHttpRequest getInstance];
     CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);

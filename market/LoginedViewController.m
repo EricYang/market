@@ -18,13 +18,8 @@
 static void *user=&user;
 static void *token=&token;
 - (IBAction)chaeckBtnPressed:(id)sender {
-    
-    //NSLog(@"the token:%@",[self.marketReq info][@"token"]);
-    //NSLog(@"the email:%@",[self.user email]);
-    //NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-    //[f setNumberStyle:NSNumberFormatterDecimalStyle];
-    //NSNumber * status = [f numberFromString:self.statusField.text];
-
+    [self.productField resignFirstResponder];
+    [self.statusField resignFirstResponder];
     NSMutableDictionary *params=[NSMutableDictionary dictionary];
     params[@"product"]=self.productField.text;
     params[@"status"]= self.statusField.text;
@@ -67,7 +62,7 @@ static void *token=&token;
     [self.marketReq addObserver:self forKeyPath:@"info.profile.get.response.data" options:NSKeyValueObservingOptionNew context:user];
     
     // Initialize Data
-    _pickerData = @[@"phone", @"car"];
+    _pickerData = @[@"Phone", @"Car",@"VideoGames",@"Home Appliances",@"Cameras",@"TV",@"Motorcycle"];
     
     // Connect data
     self.genrePicker.dataSource = self;
