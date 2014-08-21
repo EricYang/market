@@ -28,7 +28,7 @@ static void *token=&token;
         if(isSuccess){
             NSLog(@"got value");
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.valueLabel.text=[NSString stringWithFormat:@"New one price: NT$ %@ \n And your goods: NT$%@",self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"avgsValue"],self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"yoursValue"]];
+                self.valueLabel.text=[NSString stringWithFormat:@"New one price: NT$ %@ \n And your goods: NT$ %@",self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"avgsValue"],self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"yoursValue"]];
             });
             NSLog(@"%@",self.marketReq.info[@"marketPrice"][@"response"][@"data"][@"yoursValue"]);
         
